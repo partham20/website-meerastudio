@@ -3,7 +3,7 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - main  # Deploy when changes are pushed to main
+      - main  # Deploy  when changes are pushed to main
 
 permissions:
   contents: write  # Allow pushing to gh-pages
