@@ -3,10 +3,10 @@ import { Award, Users, Camera, Heart } from 'lucide-react';
 
 export default function About() {
   const stats = [
-    { icon: Camera, value: '500+', label: 'Sessions Completed' },
-    { icon: Users, value: '300+', label: 'Happy Clients' },
-    { icon: Award, value: '5+', label: 'Years Experience' },
-    { icon: Heart, value: '100%', label: 'Client Satisfaction' }
+    { icon: Camera, value: '6000+', label: 'Sessions Completed' },
+    { icon: Users, value: '1000+', label: 'Happy Clients' },
+    { icon: Award, value: '30+', label: 'Years Experience' },
+    { icon: Heart, value: '99%', label: 'Client Satisfaction' }
   ];
 
   return (
@@ -16,7 +16,7 @@ export default function About() {
           {/* Image */}
           <div className="relative">
             <img 
-              src="https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop"
+              src="/images/portfolio/mathaiyan.jpg"
               alt="Meera - Professional Photographer"
               className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-xl"
             />
@@ -32,7 +32,7 @@ export default function About() {
               Crafting Visual Stories That Last Forever
             </h2>
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-              With over 5 years of experience in professional photography, I specialize in capturing the authentic emotions and intimate moments that make your story unique. My approach combines technical expertise with artistic vision to create timeless images.
+              With over 30 years of experience in professional photography, I specialize in capturing the authentic emotions and intimate moments that make your story unique. My approach combines technical expertise with artistic vision to create timeless images.
             </p>
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">
               From intimate portraits to grand celebrations, I believe every moment deserves to be preserved with care, creativity, and attention to detail. Let me help you create lasting memories that you'll treasure for generations.

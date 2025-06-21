@@ -6,53 +6,68 @@ export default function Portfolio() {
 
   const portfolioImages = [
     {
-      url: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      url: '/images/portfolio/wedding-1.jpg',
       category: 'Wedding',
-      title: 'Romantic Garden Wedding'
+      title: 'Traditional Wedding Ceremony'
     },
     {
-      url: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      category: 'Portrait',
-      title: 'Professional Headshot'
+      url: '/images/portfolio/wedding-2.jpg',
+      category: 'Wedding',
+      title: 'Intimate Wedding Moments'
     },
     {
-      url: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop',
+      url: '/images/portfolio/family-1.jpg',
       category: 'Family',
-      title: 'Family Portrait Session'
+      title: 'Joyful Children Portrait'
     },
     {
-      url: 'https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      category: 'Wedding',
-      title: 'Intimate Ceremony'
+      url: '/images/portfolio/family-2.jpg',
+      category: 'Family',
+      title: 'Traditional Family Gathering'
     },
     {
-      url: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
+      url: '/images/portfolio/maternity-1.jpg',
       category: 'Maternity',
-      title: 'Expecting Joy'
+      title: 'Expecting Joy - Creative Collage'
     },
     {
-      url: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop',
-      category: 'Corporate',
-      title: 'Business Conference'
+      url: '/images/portfolio/maternity-2.jpg',
+      category: 'Maternity',
+      title: 'Beautiful Maternity Session'
     },
     {
-      url: 'https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop',
-      category: 'Portrait',
-      title: 'Creative Portrait'
-    },
-    {
-      url: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      url: '/images/portfolio/wedding-3.jpg',
       category: 'Wedding',
-      title: 'Reception Celebration'
+      title: 'Bridal Portrait Excellence'
     },
     {
-      url: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
-      category: 'Family',
-      title: 'Outdoor Family Session'
+      url: '/images/portfolio/kids-1.jpg',
+      category: 'Kids',
+      title: 'Creative Kids Photography'
+    },
+    {
+      url: '/images/portfolio/wedding-4.jpg',
+      category: 'Wedding',
+      title: 'Pre-Wedding Romance'
+    },
+    {
+      url: '/images/portfolio/baby-1.jpg',
+      category: 'Baby',
+      title: 'Traditional Baby Portrait'
+    },
+    {
+      url: '/images/portfolio/portrait-1.jpg',
+      category: 'Portrait',
+      title: 'Father & Son Bond'
+    },
+    {
+      url: '/images/portfolio/newborn-1.jpg',
+      category: 'Newborn',
+      title: 'Peaceful Newborn Session'
     }
   ];
 
-  const categories = ['All', 'Wedding', 'Portrait', 'Family', 'Maternity', 'Corporate'];
+  const categories = ['All', 'Wedding', 'Family', 'Maternity', 'Portrait', 'Kids', 'Baby', 'Newborn'];
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filteredImages = activeCategory === 'All' 
@@ -81,6 +96,20 @@ export default function Portfolio() {
     }
   };
 
+  // Handle keyboard navigation
+  React.useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (selectedImage !== null) {
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+        if (e.key === 'Escape') closeLightbox();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [selectedImage]);
+
   return (
     <section id="portfolio" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,7 +118,7 @@ export default function Portfolio() {
             Our Portfolio
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-            A glimpse into our recent work showcasing diverse photography styles and unforgettable moments.
+            Capturing life's precious moments through our lens - from traditional ceremonies to intimate family portraits.
           </p>
 
           {/* Category Filter */}
@@ -114,17 +143,18 @@ export default function Portfolio() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredImages.map((image, index) => (
             <div
-              key={index}
-              className="group relative overflow-hidden rounded-lg cursor-pointer transform hover:scale-105 transition-all duration-300"
+              key={`${image.category}-${index}`}
+              className="group relative overflow-hidden rounded-lg cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg"
               onClick={() => openLightbox(index)}
             >
               <img
                 src={image.url}
                 alt={image.title}
                 className="w-full h-72 object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="text-center text-white">
+                <div className="text-center text-white p-4">
                   <p className="text-sm font-semibold text-amber-400 mb-1">{image.category}</p>
                   <p className="text-lg font-serif">{image.title}</p>
                 </div>
@@ -133,39 +163,67 @@ export default function Portfolio() {
           ))}
         </div>
 
+        {/* Show count */}
+        <div className="text-center mt-8">
+          <p className="text-gray-600">
+            Showing {filteredImages.length} of {portfolioImages.length} images
+            {activeCategory !== 'All' && ` in ${activeCategory} category`}
+          </p>
+        </div>
+
         {/* Lightbox */}
         {selectedImage !== null && (
-          <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <div 
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            onClick={closeLightbox}
+          >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 text-white hover:text-amber-400 z-10"
+              className="absolute top-4 right-4 text-white hover:text-amber-400 z-10 p-2"
+              aria-label="Close lightbox"
             >
               <X className="h-8 w-8" />
             </button>
             
             <button
-              onClick={prevImage}
-              className="absolute left-4 text-white hover:text-amber-400 z-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              className="absolute left-4 text-white hover:text-amber-400 z-10 p-2"
+              aria-label="Previous image"
             >
               <ChevronLeft className="h-8 w-8" />
             </button>
             
             <button
-              onClick={nextImage}
-              className="absolute right-4 text-white hover:text-amber-400 z-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                nextImage();
+              }}
+              className="absolute right-4 text-white hover:text-amber-400 z-10 p-2"
+              aria-label="Next image"
             >
               <ChevronRight className="h-8 w-8" />
             </button>
             
-            <img
-              src={filteredImages[selectedImage].url}
-              alt={filteredImages[selectedImage].title}
-              className="max-w-full max-h-full object-contain"
-            />
+            <div 
+              className="max-w-full max-h-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={filteredImages[selectedImage].url}
+                alt={filteredImages[selectedImage].title}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
             
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-white">
               <p className="text-amber-400 font-semibold">{filteredImages[selectedImage].category}</p>
               <p className="text-lg font-serif">{filteredImages[selectedImage].title}</p>
+              <p className="text-sm text-gray-300 mt-1">
+                {selectedImage + 1} of {filteredImages.length}
+              </p>
             </div>
           </div>
         )}
