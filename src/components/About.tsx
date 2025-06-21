@@ -21,7 +21,7 @@ export default function About() {
               className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-xl"
             />
             <div className="absolute -bottom-6 -right-6 bg-amber-400 text-black p-6 rounded-lg shadow-lg">
-              <p className="font-serif text-lg font-bold">Meera Sharma</p>
+              <p className="font-serif text-lg font-bold">Mathaiyan</p>
               <p className="text-sm">Lead Photographer</p>
             </div>
           </div>
