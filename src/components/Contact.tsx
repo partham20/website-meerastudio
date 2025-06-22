@@ -55,7 +55,7 @@ export default function Contact() {
                 <Phone className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
                   <p className="font-semibold text-gray-900">Phone</p>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-gray-600">+91 9842697382</p>
                 </div>
               </div>
               
@@ -63,7 +63,7 @@ export default function Contact() {
                 <Mail className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
                   <p className="font-semibold text-gray-900">Email</p>
-                  <p className="text-gray-600">hello@meerastudio.com</p>
+                  <p className="text-gray-600">hello@meerastudio.co.in</p>
                 </div>
               </div>
               
@@ -71,7 +71,7 @@ export default function Contact() {
                 <MapPin className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
                   <p className="font-semibold text-gray-900">Location</p>
-                  <p className="text-gray-600">123 Photography Lane<br />Creative District, CA 90210</p>
+                  <p className="text-gray-600">325, BCL Complex, 1st Floor, Bus Stand Opposite<br />Bargur, Krishnagiri District, TN 635104</p>
                 </div>
               </div>
               
@@ -80,9 +80,9 @@ export default function Contact() {
                 <div>
                   <p className="font-semibold text-gray-900">Hours</p>
                   <p className="text-gray-600">
-                    Monday - Friday: 9:00 AM - 6:00 PM<br />
-                    Saturday: 10:00 AM - 4:00 PM<br />
-                    Sunday: By appointment only
+                    Monday - Saturday: 8:00 AM - 8:00 PM<br />
+                     Sunday: 10:00 AM - 8:00 PM<br />
+                   
                   </p>
                 </div>
               </div>
@@ -156,7 +156,7 @@ export default function Contact() {
                     value={formData.phone}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                    placeholder="(555) 123-4567"
+                    placeholder="+919842697382"
                   />
                 </div>
                 

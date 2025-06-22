@@ -1,67 +1,81 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
+// Import all images with correct relative paths
+import wedding1 from '../assets/portfolio/wedding-1.jpg';
+import wedding2 from '../assets/portfolio/wedding-2.jpg';
+import family1 from '../assets/portfolio/family-1.jpg';
+import family2 from '../assets/portfolio/family-2.jpg';
+import maternity1 from '../assets/portfolio/maternity-1.jpg';
+import maternity2 from '../assets/portfolio/maternity-2.jpg';
+import wedding3 from '../assets/portfolio/wedding-3.jpg';
+import kids1 from '../assets/portfolio/kids-1.jpg';
+import wedding4 from '../assets/portfolio/wedding-4.jpg';
+import baby1 from '../assets/portfolio/baby-1.jpg';
+import portrait1 from '../assets/portfolio/portrait-1.jpg';
+import newborn1 from '../assets/portfolio/newborn-1.jpg';
+
 export default function Portfolio() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const portfolioImages = [
     {
-      url: '/images/portfolio/wedding-1.jpg',
+      url: wedding1,
       category: 'Wedding',
       title: 'Traditional Wedding Ceremony'
     },
     {
-      url: '/images/portfolio/wedding-2.jpg',
+      url: wedding2,
       category: 'Wedding',
       title: 'Intimate Wedding Moments'
     },
     {
-      url: '/images/portfolio/family-1.jpg',
+      url: family1,
       category: 'Family',
       title: 'Joyful Children Portrait'
     },
     {
-      url: '/images/portfolio/family-2.jpg',
+      url: family2,
       category: 'Family',
       title: 'Traditional Family Gathering'
     },
     {
-      url: '/images/portfolio/maternity-1.jpg',
+      url: maternity1,
       category: 'Maternity',
       title: 'Expecting Joy - Creative Collage'
     },
     {
-      url: '/images/portfolio/maternity-2.jpg',
+      url: maternity2,
       category: 'Maternity',
       title: 'Beautiful Maternity Session'
     },
     {
-      url: '/images/portfolio/wedding-3.jpg',
+      url: wedding3,
       category: 'Wedding',
       title: 'Bridal Portrait Excellence'
     },
     {
-      url: '/images/portfolio/kids-1.jpg',
+      url: kids1,
       category: 'Kids',
       title: 'Creative Kids Photography'
     },
     {
-      url: '/images/portfolio/wedding-4.jpg',
+      url: wedding4,
       category: 'Wedding',
       title: 'Pre-Wedding Romance'
     },
     {
-      url: '/images/portfolio/baby-1.jpg',
+      url: baby1,
       category: 'Baby',
       title: 'Traditional Baby Portrait'
     },
     {
-      url: '/images/portfolio/portrait-1.jpg',
+      url: portrait1,
       category: 'Portrait',
       title: 'Father & Son Bond'
     },
     {
-      url: '/images/portfolio/newborn-1.jpg',
+      url: newborn1,
       category: 'Newborn',
       title: 'Peaceful Newborn Session'
     }

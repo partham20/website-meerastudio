@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, Users, Camera, Heart } from 'lucide-react';
+import mathaiyan from '../assets/portfolio/mathaiyan.jpg';
 
 export default function About() {
   const stats = [
@@ -15,8 +16,8 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Image */}
           <div className="relative">
-            <img 
-              src="/images/portfolio/mathaiyan.jpg"
+            <img
+              src={mathaiyan}
               alt="Meera - Professional Photographer"
               className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-xl"
             />

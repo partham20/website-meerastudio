@@ -50,15 +50,15 @@ export default function Footer() {
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start">
                 <Phone className="h-5 w-5 text-amber-400 mt-0.5 mr-3" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 98426 97382</span>
               </li>
               <li className="flex items-start">
                 <Mail className="h-5 w-5 text-amber-400 mt-0.5 mr-3" />
-                <span>hello@meerastudio.com</span>
+                <span>hello@meerastudio.co.in</span>
               </li>
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-amber-400 mt-0.5 mr-3" />
-                <span>123 Photography Lane<br />Creative District, CA 90210</span>
+                <span>325, BCL Complex, 1st Floor,<br /> Bus Stand Opposite, Bargur, <br />Krishnagiri District, TN 635104</span>
               </li>
             </ul>
           </div>
