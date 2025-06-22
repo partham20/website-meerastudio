@@ -16,7 +16,7 @@ export default function Footer() {
             </div>
             <p className="text-gray-300 mb-6 max-w-md leading-relaxed">
               Capturing life's beautiful moments with artistry, passion, and timeless elegance. 
-              Creating memories that last a lifetime through professional photography.
+              Creating memories that last a lifetime through professional photography and videography.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-amber-400 hover:text-black transition-all duration-200">

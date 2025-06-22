@@ -28,7 +28,7 @@ export default function Hero() {
           <span className="block text-amber-400">Beautiful Moments</span>
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl mx-auto leading-relaxed">
-          Professional photography that tells your unique story with artistry, passion, and timeless elegance.
+          Professional photography and videography that tells your unique story with artistry, passion, and timeless elegance.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
