@@ -1,49 +1,55 @@
 import React from 'react';
 import { Star, Quote } from 'lucide-react';
+import karthikPriya from '../assets/testimonials/karthik-priya.jpg';
+import lakshmi from '../assets/testimonials/lakshmi.jpg';
+import senthilKumar from '../assets/testimonials/senthil-kumar.jpg';
+import divyaArun from '../assets/testimonials/divya-arun.jpg';
+import anitha from '../assets/testimonials/anitha.jpg';
+import rajeshMeena from '../assets/testimonials/rajesh-meena.jpg';
 
 export default function Testimonials() {
   const testimonials = [
     {
-      name: 'Sarah & Michael Johnson',
-      role: 'Wedding Clients',
-      image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+      name: 'Karthik & Priya',
+      role: 'Wedding Clients, Bargur',
+      image: karthikPriya,
       rating: 5,
-      text: 'Meera captured our wedding day perfectly! Her attention to detail and ability to make us feel comfortable resulted in the most beautiful photos we could have asked for. Every moment was preserved with such artistry and emotion.'
+      text: 'Mathaiyan sir and his team covered our wedding from the engagement to the reception. He knows every shot a Tamil wedding needs — the muhurtham, the family rituals, even the small moments with our grandparents. The album feels like our family story, not just photos.'
     },
     {
-      name: 'Jennifer Chen',
-      role: 'Portrait Client',
-      image: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+      name: 'Lakshmi',
+      role: 'Family Portrait Client, Krishnagiri',
+      image: lakshmi,
       rating: 5,
-      text: 'The family portrait session exceeded all expectations. Meera has a gift for capturing genuine smiles and natural interactions. Our photos are now treasured family heirlooms that we will cherish forever.'
+      text: 'We booked the Meera Studio team for a three-generation family portrait. My parents travelled in and we wanted something special for our hall. They were so patient with my amma and made my kids laugh in every frame. The photos are now framed at home and in the puja room.'
     },
     {
-      name: 'David Martinez',
-      role: 'Corporate Client',
-      image: 'https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+      name: 'Senthil Kumar',
+      role: 'Corporate Client, Salem',
+      image: senthilKumar,
       rating: 5,
-      text: 'Professional, punctual, and incredibly talented. Meera handled our corporate event photography with such expertise. The photos perfectly captured the energy and professionalism of our conference.'
+      text: 'We booked Meera Studio for our company annual day in Salem. Edited photos were delivered the same week, all colour-corrected and ready for our LinkedIn posts and internal newsletter. The team was professional, on time, and the pricing was very reasonable for the quality we got.'
     },
     {
-      name: 'Amanda & Robert Smith',
-      role: 'Maternity Clients',
-      image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+      name: 'Divya & Arun',
+      role: 'Maternity Clients, Chennai',
+      image: divyaArun,
       rating: 5,
-      text: 'Meera made our maternity shoot so special and comfortable. Her creative vision and gentle approach resulted in stunning photos that beautifully capture this precious time in our lives.'
+      text: 'Mathaiyan travelled all the way to Chennai for our valaikappu and maternity shoot. I was nervous about being on camera but he made the whole session feel relaxed. The results were soft, natural, and very us. Already booked him again for the newborn shoot.'
     },
     {
-      name: 'Lisa Thompson',
-      role: 'Portrait Client',
-      image: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+      name: 'Anitha',
+      role: 'Portrait Client, Tirupattur',
+      image: anitha,
       rating: 5,
-      text: 'Amazing experience from start to finish! Meera has an incredible eye for composition and lighting. The headshots she took have opened so many doors for my career. Highly recommend!'
+      text: 'I needed professional headshots for my college applications and a matrimony profile. They understood both contexts and gave me two completely different sets in one session. Friends could not believe these were the same person — that is how good the lighting and styling was.'
     },
     {
-      name: 'Mark & Emma Wilson',
-      role: 'Anniversary Clients',
-      image: 'https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+      name: 'Rajesh & Meena',
+      role: 'Anniversary Clients, Dharmapuri',
+      image: rajeshMeena,
       rating: 5,
-      text: 'Celebrating our 25th anniversary with Meera was perfect. She captured our love story beautifully, creating timeless images that remind us why we fell in love all those years ago.'
+      text: 'For our first anniversary, we wanted a small couple shoot — nothing too formal. Mathaiyan drove down to Dharmapuri, scouted a nice outdoor spot, and made us laugh through the whole session. The candid shots came out far better than the posed ones. Already planning to book him every year.'
     }
   ];
 

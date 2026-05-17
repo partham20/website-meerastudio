@@ -18,7 +18,7 @@ export default function About() {
           <div className="relative">
             <img
               src={mathaiyan}
-              alt="Meera - Professional Photographer"
+              alt="Mathaiyan - Professional Photographer"
               className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-xl"
             />
             <div className="absolute -bottom-6 -right-6 bg-amber-400 text-black p-6 rounded-lg shadow-lg">
@@ -33,10 +33,10 @@ export default function About() {
               Crafting Visual Stories That Last Forever
             </h2>
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-              With over 30 years of experience in professional photography, I specialize in capturing the authentic emotions and intimate moments that make your story unique. My approach combines technical expertise with artistic vision to create timeless images.
+              With over 30 years of experience in professional photography and videography, I specialize in capturing the authentic emotions and intimate moments that make your story unique. My approach combines technical expertise with artistic vision to create timeless images and cinematic films.
             </p>
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              From intimate portraits to grand celebrations, I believe every moment deserves to be preserved with care, creativity, and attention to detail. Let me help you create lasting memories that you'll treasure for generations.
+              From intimate portraits to grand celebrations, from full wedding films to short social reels, every moment deserves to be preserved with care, creativity, and attention to detail. Let me help you create lasting memories that you'll treasure for generations.
             </p>
 
             {/* Stats */}

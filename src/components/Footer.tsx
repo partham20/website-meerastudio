@@ -35,12 +35,12 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2 text-gray-300">
-              <li><a href="#" className="hover:text-amber-400 transition-colors duration-200">Wedding Photography</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors duration-200">Portrait Sessions</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors duration-200">Maternity & Newborn</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors duration-200">Corporate Events</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors duration-200">Special Occasions</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors duration-200">Destination Sessions</a></li>
+              <li><a href="#services" className="hover:text-amber-400 transition-colors duration-200">Wedding Photography</a></li>
+              <li><a href="#services" className="hover:text-amber-400 transition-colors duration-200">Wedding Cinematography</a></li>
+              <li><a href="#services" className="hover:text-amber-400 transition-colors duration-200">Pre-Wedding Films</a></li>
+              <li><a href="#services" className="hover:text-amber-400 transition-colors duration-200">Maternity & Newborn</a></li>
+              <li><a href="#services" className="hover:text-amber-400 transition-colors duration-200">Event Photo + Video</a></li>
+              <li><a href="#services" className="hover:text-amber-400 transition-colors duration-200">Annual Days & Functions</a></li>
             </ul>
           </div>
 

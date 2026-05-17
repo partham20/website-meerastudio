@@ -118,7 +118,7 @@ export default function Contact() {
                 <MapPin className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
                   <p className="font-semibold text-gray-900">Location</p>
-                  <p className="text-gray-600">325, BCL Complex, 1st Floor, Bus Stand Opposite<br />Bargur, Krishnagiri District, TN 635104</p>
+                  <p className="text-gray-600">325, BCL Complex, 1st Floor, Bus Stand Opposite<br />Bargur, Krishnagiri, Tamil Nadu - 635104</p>
                 </div>
               </div>
               
@@ -220,12 +220,21 @@ export default function Contact() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
                   >
                     <option value="">Select a service</option>
-                    <option value="wedding">Wedding Photography</option>
-                    <option value="portrait">Portrait Session</option>
-                    <option value="maternity">Maternity & Newborn</option>
-                    <option value="corporate">Corporate Events</option>
-                    <option value="special">Special Occasions</option>
-                    <option value="destination">Destination Sessions</option>
+                    <optgroup label="Photography">
+                      <option value="wedding">Wedding Photography</option>
+                      <option value="portrait">Portrait Session</option>
+                      <option value="maternity">Maternity & Newborn</option>
+                      <option value="corporate">Corporate Event Photography</option>
+                      <option value="special">Special Occasions</option>
+                      <option value="destination">Destination Sessions</option>
+                    </optgroup>
+                    <optgroup label="Videography">
+                      <option value="wedding-video">Wedding Cinematography</option>
+                      <option value="pre-wedding-film">Pre-Wedding Film</option>
+                      <option value="event-video">Event Videography</option>
+                      <option value="functions">Functions & Annual Days</option>
+                    </optgroup>
+                    <option value="combo">Photo + Video Combo</option>
                   </select>
                 </div>
               </div>
