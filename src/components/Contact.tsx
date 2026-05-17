@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Twitter, Send } from 'lucide-react';
 
+// Get a free key at https://web3forms.com (takes ~1 minute, just enter your email)
+const WEB3FORMS_ACCESS_KEY = '090b0052-d05c-4efd-8767-635b6ddba3b0';
+const WHATSAPP_NUMBER = '919842697382'; // country code + number, no + or spaces
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -10,6 +14,8 @@ export default function Contact() {
     date: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -18,19 +24,60 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your inquiry! We will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      service: '',
-      date: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New inquiry from ${formData.name} — ${formData.service || 'Photography'}`,
+          from_name: 'Meera Studio Website',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          service: formData.service,
+          preferred_date: formData.date,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+      if (!data.success) throw new Error(data.message || 'Submission failed');
+
+      const whatsappText = [
+        '*New Inquiry from Meera Studio Website*',
+        '',
+        `*Name:* ${formData.name}`,
+        `*Email:* ${formData.email}`,
+        formData.phone ? `*Phone:* ${formData.phone}` : '',
+        `*Service:* ${formData.service}`,
+        formData.date ? `*Preferred Date:* ${formData.date}` : '',
+        '',
+        '*Message:*',
+        formData.message,
+      ].filter(Boolean).join('\n');
+
+      window.open(
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`,
+        '_blank'
+      );
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', phone: '', service: '', date: '', message: '' });
+    } catch (err) {
+      console.error('Form submission error:', err);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -215,11 +262,23 @@ export default function Contact() {
               
               <button
                 type="submit"
-                className="w-full bg-amber-400 text-black py-4 px-6 rounded-lg font-semibold hover:bg-amber-300 transition-all duration-200 flex items-center justify-center space-x-2 transform hover:scale-105"
+                disabled={isSubmitting}
+                className="w-full bg-amber-400 text-black py-4 px-6 rounded-lg font-semibold hover:bg-amber-300 transition-all duration-200 flex items-center justify-center space-x-2 transform hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <Send className="h-5 w-5" />
-                <span>Send Message</span>
+                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
               </button>
+
+              {submitStatus === 'success' && (
+                <p className="text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-sm">
+                  Thank you! Your message has been sent. A WhatsApp window has also opened — tap Send there to reach us instantly.
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm">
+                  Something went wrong. Please try again, or call us directly at +91 9842697382.
+                </p>
+              )}
             </form>
           </div>
         </div>
