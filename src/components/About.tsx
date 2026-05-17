@@ -1,13 +1,16 @@
 import React from 'react';
 import { Award, Users, Camera, Heart } from 'lucide-react';
 import mathaiyan from '../assets/portfolio/mathaiyan.jpg';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function About() {
+  const { t } = useLanguage();
+
   const stats = [
-    { icon: Camera, value: '6000+', label: 'Sessions Completed' },
-    { icon: Users, value: '1000+', label: 'Happy Clients' },
-    { icon: Award, value: '30+', label: 'Years Experience' },
-    { icon: Heart, value: '99%', label: 'Client Satisfaction' }
+    { icon: Camera, value: '6000+', label: t.about.stats.sessions },
+    { icon: Users, value: '1000+', label: t.about.stats.clients },
+    { icon: Award, value: '30+', label: t.about.stats.experience },
+    { icon: Heart, value: '99%', label: t.about.stats.satisfaction },
   ];
 
   return (
@@ -23,20 +26,20 @@ export default function About() {
             />
             <div className="absolute -bottom-6 -right-6 bg-amber-400 text-black p-6 rounded-lg shadow-lg">
               <p className="font-serif text-lg font-bold">Mathaiyan</p>
-              <p className="text-sm">Lead Photographer</p>
+              <p className="text-sm">{t.about.leadPhotographer}</p>
             </div>
           </div>
 
           {/* Content */}
           <div>
             <h2 className="text-4xl font-serif font-bold text-gray-900 mb-6">
-              Crafting Visual Stories That Last Forever
+              {t.about.title}
             </h2>
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-              With over 30 years of experience in professional photography and videography, I specialize in capturing the authentic emotions and intimate moments that make your story unique. My approach combines technical expertise with artistic vision to create timeless images and cinematic films.
+              {t.about.para1}
             </p>
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              From intimate portraits to grand celebrations, from full wedding films to short social reels, every moment deserves to be preserved with care, creativity, and attention to detail. Let me help you create lasting memories that you'll treasure for generations.
+              {t.about.para2}
             </p>
 
             {/* Stats */}

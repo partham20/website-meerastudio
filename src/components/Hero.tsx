@@ -1,7 +1,10 @@
 import React from 'react';
 import { ArrowRight, Play } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     if (element) {
@@ -24,25 +27,25 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
-          Capturing Life's
-          <span className="block text-amber-400">Beautiful Moments</span>
+          {t.hero.titleLine1}
+          <span className="block text-amber-400">{t.hero.titleLine2}</span>
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl mx-auto leading-relaxed">
-          Professional photography and videography that tells your unique story with artistry, passion, and timeless elegance.
+          {t.hero.subtitle}
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button 
+          <button
             onClick={scrollToContact}
             className="group bg-amber-400 text-black px-8 py-4 rounded-full font-semibold hover:bg-amber-300 transition-all duration-300 flex items-center space-x-2 transform hover:scale-105"
           >
-            <span>Book Your Session</span>
+            <span>{t.hero.bookBtn}</span>
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
           </button>
-          
+
           <button className="group text-white border-2 border-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-black transition-all duration-300 flex items-center space-x-2">
             <Play className="h-5 w-5" />
-            <span>View Our Work</span>
+            <span>{t.hero.viewBtn}</span>
           </button>
         </div>
       </div>

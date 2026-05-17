@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Twitter, Send } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 // Get a free key at https://web3forms.com (takes ~1 minute, just enter your email)
 const WEB3FORMS_ACCESS_KEY = '090b0052-d05c-4efd-8767-635b6ddba3b0';
 const WHATSAPP_NUMBER = '919842697382'; // country code + number, no + or spaces
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -85,59 +87,55 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
-            Let's Create Something Beautiful Together
+            {t.contact.heading}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Ready to capture your special moments? Get in touch to discuss your photography needs and let's bring your vision to life.
+            {t.contact.subtitle}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Get In Touch</h3>
-            
+            <h3 className="text-2xl font-bold text-gray-900 mb-8">{t.contact.getInTouch}</h3>
+
             <div className="space-y-6">
               <div className="flex items-start">
                 <Phone className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
-                  <p className="font-semibold text-gray-900">Phone</p>
+                  <p className="font-semibold text-gray-900">{t.contact.phone}</p>
                   <p className="text-gray-600">+91 9842697382</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Mail className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
-                  <p className="font-semibold text-gray-900">Email</p>
+                  <p className="font-semibold text-gray-900">{t.contact.email}</p>
                   <p className="text-gray-600">hello@meerastudio.co.in</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <MapPin className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
-                  <p className="font-semibold text-gray-900">Location</p>
-                  <p className="text-gray-600">325, BCL Complex, 1st Floor, Bus Stand Opposite<br />Bargur, Krishnagiri, Tamil Nadu - 635104</p>
+                  <p className="font-semibold text-gray-900">{t.contact.location}</p>
+                  <p className="text-gray-600 whitespace-pre-line">{t.contact.addressText}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Clock className="h-6 w-6 text-amber-400 mt-1 mr-4" />
                 <div>
-                  <p className="font-semibold text-gray-900">Hours</p>
-                  <p className="text-gray-600">
-                    Monday - Saturday: 8:00 AM - 8:00 PM<br />
-                     Sunday: 10:00 AM - 8:00 PM<br />
-                   
-                  </p>
+                  <p className="font-semibold text-gray-900">{t.contact.hours}</p>
+                  <p className="text-gray-600 whitespace-pre-line">{t.contact.hoursText}</p>
                 </div>
               </div>
             </div>
 
             {/* Social Media */}
             <div className="mt-8">
-              <p className="font-semibold text-gray-900 mb-4">Follow Us</p>
+              <p className="font-semibold text-gray-900 mb-4">{t.contact.followUs}</p>
               <div className="flex space-x-4">
                 <a href="#" className="bg-gray-200 p-3 rounded-full hover:bg-amber-400 transition-colors duration-200">
                   <Instagram className="h-5 w-5 text-gray-700" />
@@ -154,13 +152,13 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div className="bg-white p-8 rounded-xl shadow-lg">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h3>
-            
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.contact.sendMessage}</h3>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
+                    {t.contact.fullName}
                   </label>
                   <input
                     type="text"
@@ -170,13 +168,13 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                    placeholder="Your Name"
+                    placeholder={t.contact.fullNamePlaceholder}
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
+                    {t.contact.emailAddress}
                   </label>
                   <input
                     type="email"
@@ -190,11 +188,11 @@ export default function Contact() {
                   />
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number
+                    {t.contact.phoneNumber}
                   </label>
                   <input
                     type="tel"
@@ -206,10 +204,10 @@ export default function Contact() {
                     placeholder="+919842697382"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
-                    Service Type *
+                    {t.contact.serviceType}
                   </label>
                   <select
                     id="service"
@@ -219,29 +217,31 @@ export default function Contact() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
                   >
-                    <option value="">Select a service</option>
-                    <optgroup label="Photography">
-                      <option value="wedding">Wedding Photography</option>
-                      <option value="portrait">Portrait Session</option>
-                      <option value="maternity">Maternity & Newborn</option>
-                      <option value="corporate">Corporate Event Photography</option>
-                      <option value="special">Special Occasions</option>
-                      <option value="destination">Destination Sessions</option>
+                    <option value="">{t.contact.selectService}</option>
+                    <optgroup label={t.contact.photographyGroup}>
+                      <option value="wedding">{t.contact.serviceOptions.wedding}</option>
+                      <option value="portrait">{t.contact.serviceOptions.portrait}</option>
+                      <option value="maternity">{t.contact.serviceOptions.maternity}</option>
+                      <option value="corporate">{t.contact.serviceOptions.corporate}</option>
+                      <option value="special">{t.contact.serviceOptions.special}</option>
+                      <option value="destination">{t.contact.serviceOptions.destination}</option>
                     </optgroup>
-                    <optgroup label="Videography">
-                      <option value="wedding-video">Wedding Cinematography</option>
-                      <option value="pre-wedding-film">Pre-Wedding Film</option>
-                      <option value="event-video">Event Videography</option>
-                      <option value="functions">Functions & Annual Days</option>
+                    <optgroup label={t.contact.videographyGroup}>
+                      <option value="wedding-video">{t.contact.serviceOptions.weddingVideo}</option>
+                      <option value="pre-wedding-film">{t.contact.serviceOptions.preWeddingFilm}</option>
+                      <option value="event-video">{t.contact.serviceOptions.eventVideo}</option>
+                      <option value="functions">{t.contact.serviceOptions.functions}</option>
+                      <option value="maternity-video">{t.contact.serviceOptions.maternityVideo}</option>
+                      <option value="corporate-video">{t.contact.serviceOptions.corporateVideo}</option>
                     </optgroup>
-                    <option value="combo">Photo + Video Combo</option>
+                    <option value="combo">{t.contact.photoVideoCombo}</option>
                   </select>
                 </div>
               </div>
-              
+
               <div>
                 <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
-                  Preferred Date
+                  {t.contact.preferredDate}
                 </label>
                 <input
                   type="date"
@@ -252,10 +252,10 @@ export default function Contact() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message *
+                  {t.contact.messageLabel}
                 </label>
                 <textarea
                   id="message"
@@ -265,27 +265,27 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                  placeholder="Tell us about your photography needs..."
+                  placeholder={t.contact.messagePlaceholder}
                 ></textarea>
               </div>
-              
+
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-amber-400 text-black py-4 px-6 rounded-lg font-semibold hover:bg-amber-300 transition-all duration-200 flex items-center justify-center space-x-2 transform hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <Send className="h-5 w-5" />
-                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                <span>{isSubmitting ? t.contact.sendingBtn : t.contact.sendBtn}</span>
               </button>
 
               {submitStatus === 'success' && (
                 <p className="text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-sm">
-                  Thank you! Your message has been sent. A WhatsApp window has also opened — tap Send there to reach us instantly.
+                  {t.contact.successMsg}
                 </p>
               )}
               {submitStatus === 'error' && (
                 <p className="text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm">
-                  Something went wrong. Please try again, or call us directly at +91 9842697382.
+                  {t.contact.errorMsg}
                 </p>
               )}
             </form>

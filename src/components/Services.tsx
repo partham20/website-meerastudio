@@ -1,90 +1,18 @@
 import React from 'react';
-import { Heart, Users, Briefcase, Baby, Sparkles, MapPin, Video, Film, PlayCircle, GraduationCap, LucideIcon } from 'lucide-react';
+import { Heart, Users, Briefcase, Baby, Sparkles, MapPin, Video, Film, PlayCircle, GraduationCap, Building2, LucideIcon } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { ServiceText } from '../i18n/translations';
 
-type Service = {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  price: string;
-  features: string[];
-};
+type Service = ServiceText & { icon: LucideIcon };
+
+const photoIcons: LucideIcon[] = [Heart, Users, Baby, Briefcase, Sparkles, MapPin];
+const videoIcons: LucideIcon[] = [Video, Film, PlayCircle, GraduationCap, Baby, Building2];
 
 export default function Services() {
-  const photographyServices: Service[] = [
-    {
-      icon: Heart,
-      title: 'Wedding Photography',
-      description: 'Capture your special day with traditional and candid imagery that tells your love story.',
-      price: 'Starting at ₹75,000',
-      features: ['Full day coverage', 'Candid + traditional', '500+ edited photos', 'Premium photo album']
-    },
-    {
-      icon: Users,
-      title: 'Portrait Sessions',
-      description: 'Professional headshots and family portraits that showcase your personality.',
-      price: 'Starting at ₹6,000',
-      features: ['1-2 hour session', '30+ edited photos', 'Multiple outfit changes', 'High-res digital files']
-    },
-    {
-      icon: Baby,
-      title: 'Maternity & Newborn',
-      description: 'Gentle, artistic photography celebrating new life and growing families.',
-      price: 'Starting at ₹10,000',
-      features: ['In-studio or outdoor', 'Props included', '40+ edited photos', 'Same-day previews']
-    },
-    {
-      icon: Briefcase,
-      title: 'Corporate Events',
-      description: 'Professional event coverage for businesses, conferences, and corporate gatherings.',
-      price: 'Starting at ₹20,000',
-      features: ['Full event coverage', 'Same-day delivery', 'High-resolution files', 'Usage rights']
-    },
-    {
-      icon: Sparkles,
-      title: 'Special Occasions',
-      description: 'Birthdays, baby showers, anniversaries, house warming functions and milestone celebrations captured beautifully.',
-      price: 'Starting at ₹12,000',
-      features: ['3-4 hours coverage', '100+ edited photos', 'Group and candid shots', 'Online gallery']
-    },
-    {
-      icon: MapPin,
-      title: 'Destination Sessions',
-      description: 'Travel photography for weddings, pre-wedding shoots, and vacation memories.',
-      price: 'Custom pricing',
-      features: ['Travel included', 'Multiple locations', 'Extended coverage', 'Custom packages']
-    }
-  ];
+  const { t } = useLanguage();
 
-  const videographyServices: Service[] = [
-    {
-      icon: Video,
-      title: 'Wedding Cinematography',
-      description: 'Cinematic wedding films capturing every emotion, ritual and candid moment of your big day.',
-      price: 'Starting at ₹65,000',
-      features: ['Full day coverage', '4-5 min highlight film', 'Full ceremony footage', '4K resolution']
-    },
-    {
-      icon: Film,
-      title: 'Pre-Wedding Film',
-      description: 'Romantic cinematic films for engagements, save-the-date invites and anniversaries.',
-      price: 'Starting at ₹25,000',
-      features: ['Half-day shoot', '1-2 locations', '2-3 min cinematic film', 'Music & colour grading']
-    },
-    {
-      icon: PlayCircle,
-      title: 'Event Videography',
-      description: 'Birthday parties, baby showers, corporate events and milestone celebrations captured on film.',
-      price: 'Starting at ₹18,000',
-      features: ['3-4 hours coverage', 'Highlight reel', 'Full event footage', 'Same-week delivery']
-    },
-    {
-      icon: GraduationCap,
-      title: 'Functions & Annual Days',
-      description: 'School and college annual days, graduation ceremonies, house warming functions and community celebrations.',
-      price: 'Starting at ₹15,000',
-      features: ['Multi-camera coverage', 'Stage + audience shots', 'Speeches & performances', 'Highlight film + full footage']
-    }
-  ];
+  const photographyServices: Service[] = t.services.photography.map((s, i) => ({ ...s, icon: photoIcons[i] }));
+  const videographyServices: Service[] = t.services.videography.map((s, i) => ({ ...s, icon: videoIcons[i] }));
 
   const renderCard = (service: Service, index: number) => {
     const IconComponent = service.icon;
@@ -109,7 +37,7 @@ export default function Services() {
         </ul>
 
         <button className="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-amber-400 hover:text-black transition-all duration-200 font-semibold">
-          Learn More
+          {t.services.learnMore}
         </button>
       </div>
     );
@@ -120,10 +48,10 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
-            Photography Services
+            {t.services.photoHeading}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Professional photography services tailored to capture your most precious moments with artistry and care.
+            {t.services.photoSubtitle}
           </p>
         </div>
 
@@ -133,10 +61,10 @@ export default function Services() {
 
         <div className="text-center mt-24 mb-16">
           <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
-            Videography Services
+            {t.services.videoHeading}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Cinematic films that bring your stories to life — from full wedding films to short social reels.
+            {t.services.videoSubtitle}
           </p>
         </div>
 

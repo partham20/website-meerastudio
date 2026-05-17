@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 // Import all images with correct relative paths
 import wedding1 from '../assets/portfolio/wedding-1.jpg';
@@ -15,78 +16,40 @@ import baby1 from '../assets/portfolio/baby-1.jpg';
 import portrait1 from '../assets/portfolio/portrait-1.jpg';
 import newborn1 from '../assets/portfolio/newborn-1.jpg';
 
+// categoryIndex maps to t.portfolio.categories — 0=All, 1=Wedding, 2=Family,
+// 3=Maternity, 4=Portrait, 5=Kids, 6=Baby, 7=Newborn. Tracking by index keeps
+// the active filter valid when the user toggles language.
+const portfolioImages: { url: string; categoryIndex: number }[] = [
+  { url: wedding1, categoryIndex: 1 },
+  { url: wedding2, categoryIndex: 1 },
+  { url: family1, categoryIndex: 2 },
+  { url: family2, categoryIndex: 2 },
+  { url: maternity1, categoryIndex: 3 },
+  { url: maternity2, categoryIndex: 3 },
+  { url: wedding3, categoryIndex: 1 },
+  { url: kids1, categoryIndex: 5 },
+  { url: wedding4, categoryIndex: 1 },
+  { url: baby1, categoryIndex: 6 },
+  { url: portrait1, categoryIndex: 4 },
+  { url: newborn1, categoryIndex: 7 },
+];
+
 export default function Portfolio() {
+  const { t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
-  const portfolioImages = [
-    {
-      url: wedding1,
-      category: 'Wedding',
-      title: 'Traditional Wedding Ceremony'
-    },
-    {
-      url: wedding2,
-      category: 'Wedding',
-      title: 'Intimate Wedding Moments'
-    },
-    {
-      url: family1,
-      category: 'Family',
-      title: 'Joyful Children Portrait'
-    },
-    {
-      url: family2,
-      category: 'Family',
-      title: 'Traditional Family Gathering'
-    },
-    {
-      url: maternity1,
-      category: 'Maternity',
-      title: 'Expecting Joy - Creative Collage'
-    },
-    {
-      url: maternity2,
-      category: 'Maternity',
-      title: 'Beautiful Maternity Session'
-    },
-    {
-      url: wedding3,
-      category: 'Wedding',
-      title: 'Bridal Portrait Excellence'
-    },
-    {
-      url: kids1,
-      category: 'Kids',
-      title: 'Creative Kids Photography'
-    },
-    {
-      url: wedding4,
-      category: 'Wedding',
-      title: 'Pre-Wedding Romance'
-    },
-    {
-      url: baby1,
-      category: 'Baby',
-      title: 'Traditional Baby Portrait'
-    },
-    {
-      url: portrait1,
-      category: 'Portrait',
-      title: 'Father & Son Bond'
-    },
-    {
-      url: newborn1,
-      category: 'Newborn',
-      title: 'Peaceful Newborn Session'
-    }
-  ];
+  const localizedImages = portfolioImages.map((img, i) => ({
+    ...img,
+    title: t.portfolio.items[i].title,
+    category: t.portfolio.items[i].category,
+    originalIndex: i,
+  }));
 
-  const categories = ['All', 'Wedding', 'Family', 'Maternity', 'Portrait', 'Kids', 'Baby', 'Newborn'];
-  const [activeCategory, setActiveCategory] = useState('All');
-
-  const filteredImages = activeCategory === 'All' 
-    ? portfolioImages 
-    : portfolioImages.filter(img => img.category === activeCategory);
+  const filteredImages =
+    activeCategoryIndex === 0
+      ? localizedImages
+      : localizedImages.filter((img) => img.categoryIndex === activeCategoryIndex);
 
   const openLightbox = (index: number) => {
     setSelectedImage(index);
@@ -110,7 +73,6 @@ export default function Portfolio() {
     }
   };
 
-  // Handle keyboard navigation
   React.useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (selectedImage !== null) {
@@ -124,30 +86,33 @@ export default function Portfolio() {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage]);
 
+  const activeCategoryLabel =
+    activeCategoryIndex === 0 ? null : t.portfolio.categories[activeCategoryIndex];
+
   return (
     <section id="portfolio" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
-            Our Portfolio
+            {t.portfolio.title}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-            Capturing life's precious moments through our lens - from traditional ceremonies to intimate family portraits.
+            {t.portfolio.subtitle}
           </p>
 
           {/* Category Filter */}
           <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
+            {t.portfolio.categories.map((label, i) => (
               <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
+                key={i}
+                onClick={() => setActiveCategoryIndex(i)}
                 className={`px-6 py-2 rounded-full transition-all duration-200 ${
-                  activeCategory === category
+                  activeCategoryIndex === i
                     ? 'bg-amber-400 text-black font-semibold'
                     : 'bg-white text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                {category}
+                {label}
               </button>
             ))}
           </div>
@@ -157,7 +122,7 @@ export default function Portfolio() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredImages.map((image, index) => (
             <div
-              key={`${image.category}-${index}`}
+              key={image.originalIndex}
               className="group relative overflow-hidden rounded-lg cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg"
               onClick={() => openLightbox(index)}
             >
@@ -180,48 +145,47 @@ export default function Portfolio() {
         {/* Show count */}
         <div className="text-center mt-8">
           <p className="text-gray-600">
-            Showing {filteredImages.length} of {portfolioImages.length} images
-            {activeCategory !== 'All' && ` in ${activeCategory} category`}
+            {t.portfolio.showing(filteredImages.length, portfolioImages.length, activeCategoryLabel)}
           </p>
         </div>
 
         {/* Lightbox */}
         {selectedImage !== null && (
-          <div 
+          <div
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
             onClick={closeLightbox}
           >
             <button
               onClick={closeLightbox}
               className="absolute top-4 right-4 text-white hover:text-amber-400 z-10 p-2"
-              aria-label="Close lightbox"
+              aria-label={t.portfolio.closeLightbox}
             >
               <X className="h-8 w-8" />
             </button>
-            
+
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 prevImage();
               }}
               className="absolute left-4 text-white hover:text-amber-400 z-10 p-2"
-              aria-label="Previous image"
+              aria-label={t.portfolio.prevImage}
             >
               <ChevronLeft className="h-8 w-8" />
             </button>
-            
+
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 nextImage();
               }}
               className="absolute right-4 text-white hover:text-amber-400 z-10 p-2"
-              aria-label="Next image"
+              aria-label={t.portfolio.nextImage}
             >
               <ChevronRight className="h-8 w-8" />
             </button>
-            
-            <div 
+
+            <div
               className="max-w-full max-h-full flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
@@ -231,12 +195,12 @@ export default function Portfolio() {
                 className="max-w-full max-h-full object-contain"
               />
             </div>
-            
+
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-white">
               <p className="text-amber-400 font-semibold">{filteredImages[selectedImage].category}</p>
               <p className="text-lg font-serif">{filteredImages[selectedImage].title}</p>
               <p className="text-sm text-gray-300 mt-1">
-                {selectedImage + 1} of {filteredImages.length}
+                {t.portfolio.counter(selectedImage + 1, filteredImages.length)}
               </p>
             </div>
           </div>
