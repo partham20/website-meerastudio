@@ -15,12 +15,21 @@ const STORAGE_KEY = 'meera-studio-lang';
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Language>(() => {
     if (typeof window === 'undefined') return 'en';
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    return stored === 'ta' || stored === 'en' ? stored : 'en';
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      return stored === 'ta' || stored === 'en' ? stored : 'en';
+    } catch {
+      // Storage can be blocked (private mode, strict cookie settings)
+      return 'en';
+    }
   });
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, lang);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, lang);
+    } catch {
+      // Not persisting the choice is fine
+    }
     document.documentElement.lang = lang;
   }, [lang]);
 

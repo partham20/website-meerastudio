@@ -18,6 +18,11 @@ export type PortfolioItemText = {
   title: string;
 };
 
+export type ProcessStepText = {
+  title: string;
+  text: string;
+};
+
 export type Translation = {
   nav: {
     home: string;
@@ -26,19 +31,27 @@ export type Translation = {
     portfolio: string;
     testimonials: string;
     contact: string;
+    book: string;
+    openMenu: string;
+    closeMenu: string;
   };
   hero: {
+    eyebrow: string;
     titleLine1: string;
     titleLine2: string;
     subtitle: string;
     bookBtn: string;
     viewBtn: string;
+    marquee: string[];
   };
   about: {
+    eyebrow: string;
     title: string;
     para1: string;
     para2: string;
     leadPhotographer: string;
+    yearsBadge: string;
+    highlights: string[];
     stats: {
       sessions: string;
       clients: string;
@@ -47,15 +60,28 @@ export type Translation = {
     };
   };
   services: {
+    eyebrow: string;
+    heading: string;
     photoHeading: string;
     photoSubtitle: string;
     videoHeading: string;
     videoSubtitle: string;
-    learnMore: string;
+    enquire: string;
+    startingNote: string;
+    comboTitle: string;
+    comboText: string;
+    comboBtn: string;
     photography: ServiceText[];
     videography: ServiceText[];
   };
+  process: {
+    eyebrow: string;
+    heading: string;
+    subtitle: string;
+    steps: ProcessStepText[];
+  };
   portfolio: {
+    eyebrow: string;
     title: string;
     subtitle: string;
     categories: string[];
@@ -64,12 +90,16 @@ export type Translation = {
     closeLightbox: string;
     prevImage: string;
     nextImage: string;
+    viewImage: string;
     counter: (current: number, total: number) => string;
   };
   testimonials: {
+    eyebrow: string;
     heading: string;
     subtitle: string;
     items: TestimonialText[];
+    prev: string;
+    next: string;
   };
   contact: {
     heading: string;
@@ -83,6 +113,11 @@ export type Translation = {
     hoursText: string;
     addressText: string;
     followUs: string;
+    studioCard: string;
+    directions: string;
+    whatsappCta: string;
+    callCta: string;
+    mapTitle: string;
     fullName: string;
     fullNamePlaceholder: string;
     emailAddress: string;
@@ -99,22 +134,27 @@ export type Translation = {
     sendBtn: string;
     sendingBtn: string;
     successMsg: string;
+    whatsappFallback: string;
     errorMsg: string;
   };
   footer: {
     tagline: string;
+    exploreHeading: string;
     servicesHeading: string;
     contactHeading: string;
     serviceLinks: string[];
     copyright: (year: number) => string;
-    privacy: string;
-    terms: string;
-    cookies: string;
+    backToTop: string;
+  };
+  floating: {
+    whatsapp: string;
   };
   toggle: {
     switchTo: string;
+    label: string;
   };
   brand: string;
+  brandTagline: string;
 };
 
 const en: Translation = {
@@ -125,22 +165,46 @@ const en: Translation = {
     portfolio: 'Portfolio',
     testimonials: 'Testimonials',
     contact: 'Contact',
+    book: 'Book Now',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
   },
   hero: {
+    eyebrow: 'Photography & Cinematography · Bargur, Tamil Nadu',
     titleLine1: "Capturing Life's",
     titleLine2: 'Beautiful Moments',
     subtitle:
       'Professional photography and videography that tells your unique story with artistry, passion, and timeless elegance.',
     bookBtn: 'Book Your Session',
     viewBtn: 'View Our Work',
+    marquee: [
+      'Weddings',
+      'Pre-Wedding Films',
+      'Maternity',
+      'Newborn',
+      'Portraits',
+      'Family',
+      'Kids',
+      'Corporate Events',
+      'Annual Days',
+      'Cinematic Films',
+    ],
   },
   about: {
+    eyebrow: 'About the Studio',
     title: 'Crafting Visual Stories That Last Forever',
     para1:
       'With over 30 years of experience in professional photography and videography, I specialize in capturing the authentic emotions and intimate moments that make your story unique. My approach combines technical expertise with artistic vision to create timeless images and cinematic films.',
     para2:
       "From intimate portraits to grand celebrations, from full wedding films to short social reels, every moment deserves to be preserved with care, creativity, and attention to detail. Let me help you create lasting memories that you'll treasure for generations.",
     leadPhotographer: 'Lead Photographer',
+    yearsBadge: 'Years behind the lens',
+    highlights: [
+      'Traditional & candid coverage',
+      'Premium albums & prints',
+      'Photo and film under one roof',
+      'We travel across Tamil Nadu',
+    ],
     stats: {
       sessions: 'Sessions Completed',
       clients: 'Happy Clients',
@@ -149,13 +213,20 @@ const en: Translation = {
     },
   },
   services: {
-    photoHeading: 'Photography Services',
+    eyebrow: 'What We Offer',
+    heading: 'Services Tailored to Your Story',
+    photoHeading: 'Photography',
     photoSubtitle:
       'Professional photography services tailored to capture your most precious moments with artistry and care.',
-    videoHeading: 'Videography Services',
+    videoHeading: 'Videography',
     videoSubtitle:
       'Cinematic films that bring your stories to life — from full wedding films to short social reels.',
-    learnMore: 'Learn More',
+    enquire: 'Enquire Now',
+    startingNote: 'All prices are starting rates — every package can be tailored to your event, venue and budget.',
+    comboTitle: 'Photo + Film, One Team',
+    comboText:
+      'Book photography and videography together for seamless, coordinated coverage of your entire celebration.',
+    comboBtn: 'Ask for a Combo Package',
     photography: [
       {
         title: 'Wedding Photography',
@@ -237,7 +308,23 @@ const en: Translation = {
       },
     ],
   },
+  process: {
+    eyebrow: 'How We Work',
+    heading: 'From First Call to Final Album',
+    subtitle:
+      'A simple, unhurried process — so you can stay present in your moments while we take care of the rest.',
+    steps: [
+      { title: 'Consult', text: 'Share your date, venue and ideas with us over a call, WhatsApp or a studio visit.' },
+      { title: 'Plan', text: 'We recommend the right package, shot list and locations to suit your event and budget.' },
+      {
+        title: 'Capture',
+        text: 'On the day, our team covers every ritual, emotion and candid moment — calmly and on time.',
+      },
+      { title: 'Deliver', text: 'Carefully edited photos, films and premium albums, delivered ready to treasure.' },
+    ],
+  },
   portfolio: {
+    eyebrow: 'Selected Work',
     title: 'Our Portfolio',
     subtitle:
       "Capturing life's precious moments through our lens — from traditional ceremonies to intimate family portraits.",
@@ -261,9 +348,11 @@ const en: Translation = {
     closeLightbox: 'Close lightbox',
     prevImage: 'Previous image',
     nextImage: 'Next image',
+    viewImage: 'View image',
     counter: (current, total) => `${current} of ${total}`,
   },
   testimonials: {
+    eyebrow: 'Kind Words',
     heading: 'What Our Clients Say',
     subtitle:
       "Don't just take our word for it. Here's what our amazing clients have to say about their experience with Meera Studio.",
@@ -299,6 +388,8 @@ const en: Translation = {
         text: 'For our first anniversary, we wanted a small couple shoot — nothing too formal. Mathaiyan drove down to Dharmapuri, scouted a nice outdoor spot, and made us laugh through the whole session. The candid shots came out far better than the posed ones. Already planning to book him every year.',
       },
     ],
+    prev: 'Previous review',
+    next: 'Next review',
   },
   contact: {
     heading: "Let's Create Something Beautiful Together",
@@ -313,6 +404,11 @@ const en: Translation = {
     hoursText: 'Monday – Saturday: 8:00 AM – 8:00 PM\nSunday: 10:00 AM – 8:00 PM',
     addressText: '325, BCL Complex, 1st Floor, Bus Stand Opposite\nBargur, Krishnagiri, Tamil Nadu - 635104',
     followUs: 'Follow Us',
+    studioCard: 'Visit the Studio',
+    directions: 'Get Directions',
+    whatsappCta: 'Chat on WhatsApp',
+    callCta: 'Call Now',
+    mapTitle: 'Map showing Meera Studio, Bargur',
     fullName: 'Full Name *',
     fullNamePlaceholder: 'Your Name',
     emailAddress: 'Email Address *',
@@ -343,11 +439,13 @@ const en: Translation = {
     sendingBtn: 'Sending...',
     successMsg:
       'Thank you! Your message has been sent. A WhatsApp window has also opened — tap Send there to reach us instantly.',
+    whatsappFallback: "WhatsApp didn't open? Continue here",
     errorMsg: 'Something went wrong. Please try again, or call us directly at +91 9842697382.',
   },
   footer: {
     tagline:
       "Capturing life's beautiful moments with artistry, passion, and timeless elegance. Creating memories that last a lifetime through professional photography and videography.",
+    exploreHeading: 'Explore',
     servicesHeading: 'Services',
     contactHeading: 'Contact',
     serviceLinks: [
@@ -359,14 +457,17 @@ const en: Translation = {
       'Annual Days & Functions',
     ],
     copyright: (year) => `© ${year} Meera Studio. All rights reserved.`,
-    privacy: 'Privacy Policy',
-    terms: 'Terms of Service',
-    cookies: 'Cookie Policy',
+    backToTop: 'Back to top',
+  },
+  floating: {
+    whatsapp: 'Chat with us on WhatsApp',
   },
   toggle: {
     switchTo: 'தமிழ்',
+    label: 'Choose language',
   },
   brand: 'Meera Studio',
+  brandTagline: 'Photography · Films',
 };
 
 const ta: Translation = {
@@ -377,22 +478,46 @@ const ta: Translation = {
     portfolio: 'எங்கள் படைப்புகள்',
     testimonials: 'கருத்துகள்',
     contact: 'தொடர்பு',
+    book: 'முன்பதிவு',
+    openMenu: 'மெனுவைத் திற',
+    closeMenu: 'மெனுவை மூடு',
   },
   hero: {
-    titleLine1: 'வாழ்வின்',
-    titleLine2: 'அழகிய தருணங்களை',
+    eyebrow: 'புகைப்படம் & ஒளிப்பதிவு · பர்கூர், தமிழ்நாடு',
+    titleLine1: 'வாழ்வின் அழகிய தருணங்கள்',
+    titleLine2: 'என்றென்றும் நினைவுகளாய்',
     subtitle:
       'உங்கள் தனித்துவமான கதையை கலை நயத்துடனும், ஆர்வத்துடனும், காலத்தை வென்ற நேர்த்தியுடனும் சொல்லும் தொழில்முறை புகைப்படம் மற்றும் ஒளிப்பதிவு சேவைகள்.',
-    bookBtn: 'உங்கள் நேரத்தை முன்பதிவு செய்யுங்கள்',
-    viewBtn: 'எங்கள் படைப்புகளைப் பாருங்கள்',
+    bookBtn: 'இப்போதே முன்பதிவு செய்யுங்கள்',
+    viewBtn: 'படைப்புகளைப் பாருங்கள்',
+    marquee: [
+      'திருமணம்',
+      'ப்ரீ-வெட்டிங் ஃபிலிம்',
+      'கருவுற்ற காலம்',
+      'பிறந்த குழந்தை',
+      'உருவப்படம்',
+      'குடும்பம்',
+      'குழந்தைகள்',
+      'கார்ப்பரேட் நிகழ்வுகள்',
+      'ஆண்டுவிழாக்கள்',
+      'சினிமா படங்கள்',
+    ],
   },
   about: {
+    eyebrow: 'ஸ்டுடியோ பற்றி',
     title: 'என்றென்றும் நிலைக்கும் காட்சிக் கதைகளை உருவாக்குகிறோம்',
     para1:
       '30 ஆண்டுகளுக்கும் மேலான தொழில்முறை புகைப்படம் மற்றும் ஒளிப்பதிவு அனுபவத்துடன், உங்கள் கதையை தனித்துவமாக்கும் உண்மையான உணர்வுகளையும் நெருக்கமான தருணங்களையும் பதிவு செய்வதில் நிபுணத்துவம் பெற்றுள்ளேன். தொழில்நுட்பத் திறமையையும் கலை நோக்கையும் இணைத்து காலத்தை வென்ற படங்களையும் சினிமா போன்ற காட்சிகளையும் உருவாக்குகிறேன்.',
     para2:
       'சிறு உருவப்படங்கள் முதல் பெரிய கொண்டாட்டங்கள் வரை, முழு திருமண படங்கள் முதல் சமூக ஊடகக் காட்சிகள் வரை, ஒவ்வொரு தருணமும் கவனத்துடனும் படைப்பாற்றலுடனும் நுணுக்கமான பார்வையுடனும் பாதுகாக்கப்பட வேண்டியது. தலைமுறைகள் தாண்டி நினைவில் நிற்கும் காட்சிகளை உருவாக்க உதவுகிறேன்.',
     leadPhotographer: 'முதன்மை புகைப்படக் கலைஞர்',
+    yearsBadge: 'ஆண்டுகள் கேமராவின் பின்னால்',
+    highlights: [
+      'பாரம்பரிய & இயல்பான (காண்டிட்) கவரேஜ்',
+      'பிரீமியம் ஆல்பங்கள் & அச்சுகள்',
+      'புகைப்படமும் வீடியோவும் ஒரே இடத்தில்',
+      'தமிழ்நாடு முழுவதும் பயணிக்கிறோம்',
+    ],
     stats: {
       sessions: 'முடிக்கப்பட்ட நிகழ்வுகள்',
       clients: 'மகிழ்ச்சியான வாடிக்கையாளர்கள்',
@@ -401,13 +526,21 @@ const ta: Translation = {
     },
   },
   services: {
-    photoHeading: 'புகைப்பட சேவைகள்',
+    eyebrow: 'நாங்கள் வழங்குவது',
+    heading: 'உங்கள் கதைக்கேற்ற சேவைகள்',
+    photoHeading: 'புகைப்படம்',
     photoSubtitle:
       'உங்கள் மிக விலையுயர்ந்த தருணங்களை கலை நயத்துடனும் கவனத்துடனும் பதிவு செய்ய வடிவமைக்கப்பட்ட தொழில்முறை புகைப்பட சேவைகள்.',
-    videoHeading: 'ஒளிப்பதிவு சேவைகள்',
+    videoHeading: 'ஒளிப்பதிவு',
     videoSubtitle:
       'உங்கள் கதைகளை உயிர்ப்பிக்கும் சினிமா படங்கள் — முழு திருமண படங்கள் முதல் சமூக ஊடகக் காட்சிகள் வரை.',
-    learnMore: 'மேலும் அறிய',
+    enquire: 'விசாரிக்கவும்',
+    startingNote:
+      'அனைத்தும் தொடக்க விலைகள் — உங்கள் நிகழ்வு, இடம் மற்றும் பட்ஜெட்டுக்கு ஏற்ப ஒவ்வொரு தொகுப்பையும் மாற்றியமைக்கலாம்.',
+    comboTitle: 'புகைப்படம் + வீடியோ, ஒரே குழு',
+    comboText:
+      'புகைப்படம் மற்றும் ஒளிப்பதிவு இரண்டையும் ஒன்றாக முன்பதிவு செய்து, உங்கள் முழு கொண்டாட்டத்தையும் ஒருங்கிணைந்த முறையில் பதிவு செய்யுங்கள்.',
+    comboBtn: 'காம்போ தொகுப்பு பற்றி கேளுங்கள்',
     photography: [
       {
         title: 'திருமண புகைப்படம்',
@@ -485,7 +618,32 @@ const ta: Translation = {
       },
     ],
   },
+  process: {
+    eyebrow: 'எங்கள் செயல்முறை',
+    heading: 'முதல் அழைப்பு முதல் இறுதி ஆல்பம் வரை',
+    subtitle:
+      'எளிமையான, அவசரமில்லாத செயல்முறை — நீங்கள் உங்கள் தருணங்களை அனுபவியுங்கள், மற்றவற்றை நாங்கள் பார்த்துக்கொள்கிறோம்.',
+    steps: [
+      {
+        title: 'ஆலோசனை',
+        text: 'உங்கள் தேதி, இடம் மற்றும் யோசனைகளை அழைப்பு, WhatsApp அல்லது ஸ்டுடியோ வருகை மூலம் பகிருங்கள்.',
+      },
+      {
+        title: 'திட்டமிடல்',
+        text: 'உங்கள் நிகழ்வுக்கும் பட்ஜெட்டுக்கும் ஏற்ற தொகுப்பு, காட்சிப் பட்டியல் மற்றும் இடங்களைப் பரிந்துரைக்கிறோம்.',
+      },
+      {
+        title: 'படப்பிடிப்பு',
+        text: 'நிகழ்வு நாளில், ஒவ்வொரு சடங்கு, உணர்வு மற்றும் இயல்பான தருணத்தையும் அமைதியாகவும் சரியான நேரத்திலும் பதிவு செய்கிறோம்.',
+      },
+      {
+        title: 'வழங்கல்',
+        text: 'கவனமாக எடிட் செய்யப்பட்ட புகைப்படங்கள், வீடியோக்கள் மற்றும் பிரீமியம் ஆல்பங்கள் — பொக்கிஷமாக வைத்துக்கொள்ளத் தயாராக.',
+      },
+    ],
+  },
   portfolio: {
+    eyebrow: 'தேர்ந்தெடுத்த படைப்புகள்',
     title: 'எங்கள் படைப்புகள்',
     subtitle:
       'எங்கள் கேமராவின் வழியாக வாழ்வின் விலையுயர்ந்த தருணங்களைப் பதிவு செய்கிறோம் — பாரம்பரிய சடங்குகள் முதல் நெருக்கமான குடும்ப உருவப்படங்கள் வரை.',
@@ -511,9 +669,11 @@ const ta: Translation = {
     closeLightbox: 'மூடு',
     prevImage: 'முந்தைய படம்',
     nextImage: 'அடுத்த படம்',
+    viewImage: 'படத்தைப் பார்க்க',
     counter: (current, total) => `${total}-ல் ${current}`,
   },
   testimonials: {
+    eyebrow: 'அன்பான வார்த்தைகள்',
     heading: 'எங்கள் வாடிக்கையாளர்கள் சொல்வது',
     subtitle:
       'எங்கள் சொல்லை மட்டும் நம்ப வேண்டாம். மீரா ஸ்டுடியோவுடனான தங்கள் அனுபவம் குறித்து எங்கள் வாடிக்கையாளர்கள் சொல்வது இதோ.',
@@ -549,6 +709,8 @@ const ta: Translation = {
         text: 'எங்கள் முதல் திருமண நினைவு நாளுக்காக ஒரு சிறிய தம்பதி ஷூட் வேண்டியிருந்தது — அதிக சம்பிரதாயம் இல்லாமல். மாதையன் தர்மபுரி வரை வந்து, ஒரு நல்ல வெளிப்புற இடத்தைத் தேர்ந்தெடுத்து, முழு செஷனிலும் எங்களைச் சிரிக்க வைத்தார். போஸ் செய்தவற்றை விட இயல்பான காட்சிகள் மிகவும் சிறப்பாக வந்தன. ஒவ்வொரு ஆண்டும் அவரை முன்பதிவு செய்யத் திட்டமிட்டுள்ளோம்.',
       },
     ],
+    prev: 'முந்தைய கருத்து',
+    next: 'அடுத்த கருத்து',
   },
   contact: {
     heading: 'ஒன்றாக ஏதாவது அழகான ஒன்றை உருவாக்குவோம்',
@@ -563,6 +725,11 @@ const ta: Translation = {
     hoursText: 'திங்கள் – சனிக்கிழமை: காலை 8:00 – இரவு 8:00\nஞாயிற்றுக்கிழமை: காலை 10:00 – இரவு 8:00',
     addressText: '325, BCL வளாகம், 1வது மாடி, பேருந்து நிலையம் எதிரே\nபர்கூர், கிருஷ்ணகிரி, தமிழ்நாடு - 635104',
     followUs: 'எங்களைப் பின்தொடருங்கள்',
+    studioCard: 'ஸ்டுடியோவுக்கு வாருங்கள்',
+    directions: 'வழிகாட்டுதல் பெற',
+    whatsappCta: 'WhatsApp-ல் பேசுங்கள்',
+    callCta: 'இப்போதே அழைக்கவும்',
+    mapTitle: 'மீரா ஸ்டுடியோ, பர்கூர் — வரைபடம்',
     fullName: 'முழுப் பெயர் *',
     fullNamePlaceholder: 'உங்கள் பெயர்',
     emailAddress: 'மின்னஞ்சல் முகவரி *',
@@ -590,14 +757,16 @@ const ta: Translation = {
     messageLabel: 'செய்தி *',
     messagePlaceholder: 'உங்கள் புகைப்படத் தேவைகள் பற்றி சொல்லுங்கள்...',
     sendBtn: 'செய்தி அனுப்பு',
-    sendingBtn: 'அனுப்புகிறேன்...',
+    sendingBtn: 'அனுப்பப்படுகிறது...',
     successMsg:
       'நன்றி! உங்கள் செய்தி அனுப்பப்பட்டது. WhatsApp சாளரமும் திறக்கப்பட்டது — உடனே எங்களை அடைய அங்கு Send-ஐ அழுத்துங்கள்.',
+    whatsappFallback: 'WhatsApp திறக்கவில்லையா? இங்கே தொடரவும்',
     errorMsg: 'ஏதோ தவறு நடந்துவிட்டது. மீண்டும் முயற்சி செய்யுங்கள், அல்லது நேரடியாக +91 9842697382-ல் அழைக்கவும்.',
   },
   footer: {
     tagline:
       'கலை நயத்துடனும், ஆர்வத்துடனும், காலத்தை வென்ற நேர்த்தியுடனும் வாழ்வின் அழகிய தருணங்களைப் பதிவு செய்கிறோம். தொழில்முறை புகைப்படம் மற்றும் ஒளிப்பதிவு வழியாக வாழ்நாள் முழுவதும் நீடிக்கும் நினைவுகளை உருவாக்குகிறோம்.',
+    exploreHeading: 'விரைவு இணைப்புகள்',
     servicesHeading: 'சேவைகள்',
     contactHeading: 'தொடர்பு',
     serviceLinks: [
@@ -609,14 +778,17 @@ const ta: Translation = {
       'ஆண்டுவிழாக்கள் & ஃபங்க்ஷன்ஸ்',
     ],
     copyright: (year) => `© ${year} மீரா ஸ்டுடியோ. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.`,
-    privacy: 'தனியுரிமைக் கொள்கை',
-    terms: 'சேவை நிபந்தனைகள்',
-    cookies: 'குக்கீ கொள்கை',
+    backToTop: 'மேலே செல்ல',
+  },
+  floating: {
+    whatsapp: 'WhatsApp-ல் எங்களுடன் பேசுங்கள்',
   },
   toggle: {
     switchTo: 'EN',
+    label: 'மொழியைத் தேர்ந்தெடுக்கவும்',
   },
   brand: 'மீரா ஸ்டுடியோ',
+  brandTagline: 'புகைப்படம் · ஒளிப்பதிவு',
 };
 
 export const translations: Record<Language, Translation> = { en, ta };
