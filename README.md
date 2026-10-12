@@ -34,7 +34,11 @@ npm run dev        # Vite dev server with HMR
 
 | Path | Contents |
 |------|----------|
-| `src/` | React components and application source |
+| `src/components/` | Page sections (Hero, About, Services, Portfolio, Process, Testimonials, Contact, Footer) and shared `ui/` pieces |
+| `src/config.ts` | Phone, WhatsApp, email, map address, social links and the Web3Forms key — edit here to update every section |
+| `src/i18n/` | English/Tamil copy (`translations.ts`) and the language provider |
+| `src/hooks/` | Scroll-reveal, count-up, scroll-spy and reduced-motion hooks |
+| `public/` | Static files served as-is (favicon) |
 | `images/` | Site imagery |
 | `index.html` | Vite entry document |
 | `tailwind.config.js`, `postcss.config.js` | Styling configuration |

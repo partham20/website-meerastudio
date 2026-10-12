@@ -1,44 +1,91 @@
-import React from 'react';
-import { Camera, Instagram, Facebook, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, Phone, MapPin, ArrowUp, LucideIcon } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { STUDIO, SOCIAL_LINKS, whatsappLink } from '../config';
+import Logo from './ui/Logo';
+import WhatsAppIcon from './ui/WhatsAppIcon';
+
+const socialIcons: Record<keyof typeof SOCIAL_LINKS, LucideIcon> = {
+  instagram: Instagram,
+  facebook: Facebook,
+  youtube: Youtube,
+};
 
 export default function Footer() {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
+  const socials = (Object.keys(SOCIAL_LINKS) as (keyof typeof SOCIAL_LINKS)[]).filter((k) => SOCIAL_LINKS[k]);
+
+  const explore = [
+    { id: 'about', label: t.nav.about },
+    { id: 'services', label: t.nav.services },
+    { id: 'portfolio', label: t.nav.portfolio },
+    { id: 'testimonials', label: t.nav.testimonials },
+    { id: 'contact', label: t.nav.contact },
+  ];
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="grain relative overflow-hidden bg-ink text-ivory">
+      <div className="container-page relative z-10 pt-20">
+        <div className="grid gap-12 pb-14 md:grid-cols-2 lg:grid-cols-12">
           {/* Brand */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <Camera className="h-8 w-8 text-amber-400" />
-              <span className="text-2xl font-serif font-bold">{t.brand}</span>
-            </div>
-            <p className="text-gray-300 mb-6 max-w-md leading-relaxed">
-              {t.footer.tagline}
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-amber-400 hover:text-black transition-all duration-200">
-                <Instagram className="h-5 w-5" />
+          <div className="lg:col-span-5">
+            <a href="#home" aria-label={t.brand}>
+              <Logo />
+            </a>
+            <p className="mt-6 max-w-sm leading-relaxed text-ivory/55">{t.footer.tagline}</p>
+            <div className="mt-7 flex gap-3">
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="grid h-10 w-10 place-items-center rounded-full border border-ivory/15 transition-colors hover:border-gold-400 hover:text-gold-300"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
               </a>
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-amber-400 hover:text-black transition-all duration-200">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-amber-400 hover:text-black transition-all duration-200">
-                <Twitter className="h-5 w-5" />
-              </a>
+              {socials.map((key) => {
+                const Icon = socialIcons[key];
+                return (
+                  <a
+                    key={key}
+                    href={SOCIAL_LINKS[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={key}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-ivory/15 transition-colors hover:border-gold-400 hover:text-gold-300"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
+          {/* Explore */}
+          <nav className="lg:col-span-2" aria-label={t.footer.exploreHeading}>
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-400">
+              {t.footer.exploreHeading}
+            </h3>
+            <ul className="mt-5 space-y-3 text-ivory/65">
+              {explore.map((item) => (
+                <li key={item.id}>
+                  <a href={`#${item.id}`} className="transition-colors hover:text-ivory">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           {/* Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">{t.footer.servicesHeading}</h3>
-            <ul className="space-y-2 text-gray-300">
-              {t.footer.serviceLinks.map((label, i) => (
-                <li key={i}>
-                  <a href="#services" className="hover:text-amber-400 transition-colors duration-200">
+          <div className="lg:col-span-2">
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-400">
+              {t.footer.servicesHeading}
+            </h3>
+            <ul className="mt-5 space-y-3 text-ivory/65">
+              {t.footer.serviceLinks.map((label) => (
+                <li key={label}>
+                  <a href="#services" className="transition-colors hover:text-ivory">
                     {label}
                   </a>
                 </li>
@@ -46,38 +93,49 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">{t.footer.contactHeading}</h3>
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-start">
-                <Phone className="h-5 w-5 text-amber-400 mt-0.5 mr-3" />
-                <span>+91 98426 97382</span>
+          {/* Contact */}
+          <div className="lg:col-span-3">
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-400">
+              {t.footer.contactHeading}
+            </h3>
+            <ul className="mt-5 space-y-4 text-ivory/65">
+              <li>
+                <a href={STUDIO.phoneHref} className="flex items-start gap-3 transition-colors hover:text-ivory">
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
+                  {STUDIO.phoneDisplay}
+                </a>
               </li>
-              <li className="flex items-start">
-                <Mail className="h-5 w-5 text-amber-400 mt-0.5 mr-3" />
-                <span>hello@meerastudio.co.in</span>
+              <li>
+                <a
+                  href={`mailto:${STUDIO.email}`}
+                  className="flex items-start gap-3 transition-colors hover:text-ivory"
+                >
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
+                  <span className="break-all">{STUDIO.email}</span>
+                </a>
               </li>
-              <li className="flex items-start">
-                <MapPin className="h-5 w-5 text-amber-400 mt-0.5 mr-3" />
-                <span className="whitespace-pre-line">{t.contact.addressText}</span>
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
+                <span className="whitespace-pre-line text-sm leading-relaxed">{t.contact.addressText}</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 mb-4 md:mb-0">
-              {t.footer.copyright(currentYear)}
-            </p>
-            <div className="flex space-x-6 text-gray-400">
-              <a href="#" className="hover:text-amber-400 transition-colors duration-200">{t.footer.privacy}</a>
-              <a href="#" className="hover:text-amber-400 transition-colors duration-200">{t.footer.terms}</a>
-              <a href="#" className="hover:text-amber-400 transition-colors duration-200">{t.footer.cookies}</a>
-            </div>
-          </div>
+        <div className="flex flex-col-reverse items-center justify-between gap-4 border-t border-ivory/10 py-7 text-sm text-ivory/45 md:flex-row">
+          <p>{t.footer.copyright(currentYear)}</p>
+          <a href="#home" className="inline-flex items-center gap-2 transition-colors hover:text-gold-300">
+            {t.footer.backToTop}
+            <ArrowUp className="h-4 w-4" />
+          </a>
         </div>
+      </div>
+
+      {/* Oversized wordmark */}
+      <div aria-hidden="true" className="pointer-events-none relative z-0 -mb-[0.22em] select-none text-center">
+        <span className="text-outline block whitespace-nowrap font-display text-[19vw] font-semibold leading-none">
+          Meera Studio
+        </span>
       </div>
     </footer>
   );

@@ -1,32 +1,64 @@
-import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Twitter, Send } from 'lucide-react';
+import { useEffect, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Instagram,
+  Facebook,
+  Youtube,
+  Send,
+  Navigation,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  LucideIcon,
+} from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import type { ServiceRequest } from '../App';
+import { STUDIO, SOCIAL_LINKS, WEB3FORMS_ACCESS_KEY, whatsappLink, mapsDirectionsLink, mapsEmbedLink } from '../config';
+import { useInView } from '../hooks/useInView';
+import SectionHeading from './ui/SectionHeading';
+import Reveal from './ui/Reveal';
+import WhatsAppIcon from './ui/WhatsAppIcon';
 
-// Get a free key at https://web3forms.com (takes ~1 minute, just enter your email)
-const WEB3FORMS_ACCESS_KEY = '090b0052-d05c-4efd-8767-635b6ddba3b0';
-const WHATSAPP_NUMBER = '919842697382'; // country code + number, no + or spaces
+const emptyForm = { name: '', email: '', phone: '', service: '', date: '', message: '' };
 
-export default function Contact() {
+const socialIcons: Record<keyof typeof SOCIAL_LINKS, LucideIcon> = {
+  instagram: Instagram,
+  facebook: Facebook,
+  youtube: Youtube,
+};
+
+const todayISO = () => {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+};
+
+export default function Contact({ serviceRequest }: { serviceRequest: ServiceRequest | null }) {
   const { t } = useLanguage();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: '',
-    date: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [whatsappUrl, setWhatsappUrl] = useState('');
+  const [highlightService, setHighlightService] = useState(false);
+  const { ref: mapRef, inView: mapInView } = useInView<HTMLDivElement>({ rootMargin: '300px' });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  // Pre-select the service chosen from a Services card.
+  useEffect(() => {
+    if (!serviceRequest) return;
+    setFormData((f) => ({ ...f, service: serviceRequest.key }));
+    setHighlightService(true);
+    const id = window.setTimeout(() => setHighlightService(false), 1800);
+    return () => window.clearTimeout(id);
+  }, [serviceRequest]);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -65,15 +97,16 @@ export default function Contact() {
         '',
         '*Message:*',
         formData.message,
-      ].filter(Boolean).join('\n');
+      ]
+        .filter(Boolean)
+        .join('\n');
 
-      window.open(
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`,
-        '_blank'
-      );
+      const url = whatsappLink(whatsappText);
+      setWhatsappUrl(url);
+      window.open(url, '_blank', 'noopener');
 
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', service: '', date: '', message: '' });
+      setFormData(emptyForm);
     } catch (err) {
       console.error('Form submission error:', err);
       setSubmitStatus('error');
@@ -82,131 +115,219 @@ export default function Contact() {
     }
   };
 
+  const socials = (Object.keys(SOCIAL_LINKS) as (keyof typeof SOCIAL_LINKS)[]).filter((k) => SOCIAL_LINKS[k]);
+
+  const infoRows: { icon: LucideIcon; label: string; content: ReactNode }[] = [
+    {
+      icon: Phone,
+      label: t.contact.phone,
+      content: (
+        <a href={STUDIO.phoneHref} className="transition-colors hover:text-gold-300">
+          {STUDIO.phoneDisplay}
+        </a>
+      ),
+    },
+    {
+      icon: Mail,
+      label: t.contact.email,
+      content: (
+        <a href={`mailto:${STUDIO.email}`} className="break-all transition-colors hover:text-gold-300">
+          {STUDIO.email}
+        </a>
+      ),
+    },
+    {
+      icon: MapPin,
+      label: t.contact.location,
+      content: (
+        <>
+          <span className="whitespace-pre-line">{t.contact.addressText}</span>
+          <a
+            href={mapsDirectionsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-300 hover:text-gold-200"
+          >
+            <Navigation className="h-3.5 w-3.5" />
+            {t.contact.directions}
+          </a>
+        </>
+      ),
+    },
+    {
+      icon: Clock,
+      label: t.contact.hours,
+      content: <span className="whitespace-pre-line">{t.contact.hoursText}</span>,
+    },
+  ];
+
   return (
-    <section id="contact" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
-            {t.contact.heading}
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {t.contact.subtitle}
-          </p>
-        </div>
+    <section id="contact" className="relative bg-ivory-100 py-24 md:py-32">
+      <div className="container-page">
+        <SectionHeading
+          index="06"
+          eyebrow={t.contact.getInTouch}
+          title={t.contact.heading}
+          subtitle={t.contact.subtitle}
+        />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">{t.contact.getInTouch}</h3>
+        <div className="mt-16 grid gap-8 lg:grid-cols-12">
+          {/* Studio card */}
+          <Reveal className="lg:col-span-5">
+            <div className="grain relative flex h-full flex-col overflow-hidden rounded-[28px] bg-ink p-8 text-ivory md:p-10">
+              <div
+                aria-hidden="true"
+                className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gold-500/15 blur-3xl"
+              />
+              <div className="relative z-10 flex h-full flex-col">
+                <h3 className="font-display text-3xl font-medium">{t.contact.studioCard}</h3>
 
-            <div className="space-y-6">
-              <div className="flex items-start">
-                <Phone className="h-6 w-6 text-amber-400 mt-1 mr-4" />
-                <div>
-                  <p className="font-semibold text-gray-900">{t.contact.phone}</p>
-                  <p className="text-gray-600">+91 9842697382</p>
+                <ul className="mt-8 space-y-6">
+                  {infoRows.map(({ icon: Icon, label, content }) => (
+                    <li key={label} className="flex gap-4">
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-gold-500/30 text-gold-400">
+                        <Icon className="h-[18px] w-[18px]" strokeWidth={1.7} />
+                      </span>
+                      <div className="min-w-0 pt-0.5 text-ivory/80">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ivory/45">{label}</p>
+                        <div className="mt-1 flex flex-col leading-relaxed">{content}</div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
+                  <a
+                    href={whatsappLink()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn whitespace-nowrap bg-[#25D366] px-5 text-ink hover:bg-[#3ee07a]"
+                  >
+                    <WhatsAppIcon className="h-4 w-4" />
+                    {t.contact.whatsappCta}
+                  </a>
+                  <a href={STUDIO.phoneHref} className="btn-outline-light whitespace-nowrap px-5">
+                    <Phone className="h-4 w-4" />
+                    {t.contact.callCta}
+                  </a>
                 </div>
-              </div>
 
-              <div className="flex items-start">
-                <Mail className="h-6 w-6 text-amber-400 mt-1 mr-4" />
-                <div>
-                  <p className="font-semibold text-gray-900">{t.contact.email}</p>
-                  <p className="text-gray-600">hello@meerastudio.co.in</p>
-                </div>
-              </div>
+                {socials.length > 0 && (
+                  <div className="mt-8 flex items-center gap-3">
+                    <p className="mr-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-ivory/45">
+                      {t.contact.followUs}
+                    </p>
+                    {socials.map((key) => {
+                      const Icon = socialIcons[key];
+                      return (
+                        <a
+                          key={key}
+                          href={SOCIAL_LINKS[key]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={key}
+                          className="grid h-10 w-10 place-items-center rounded-full border border-ivory/15 transition-colors hover:border-gold-400 hover:text-gold-300"
+                        >
+                          <Icon className="h-4 w-4" />
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
 
-              <div className="flex items-start">
-                <MapPin className="h-6 w-6 text-amber-400 mt-1 mr-4" />
-                <div>
-                  <p className="font-semibold text-gray-900">{t.contact.location}</p>
-                  <p className="text-gray-600 whitespace-pre-line">{t.contact.addressText}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <Clock className="h-6 w-6 text-amber-400 mt-1 mr-4" />
-                <div>
-                  <p className="font-semibold text-gray-900">{t.contact.hours}</p>
-                  <p className="text-gray-600 whitespace-pre-line">{t.contact.hoursText}</p>
+                <div
+                  ref={mapRef}
+                  className="mt-9 min-h-[200px] flex-1 overflow-hidden rounded-2xl border border-ivory/10 bg-ink-700"
+                >
+                  {mapInView && (
+                    <iframe
+                      title={t.contact.mapTitle}
+                      src={mapsEmbedLink}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="h-full min-h-[200px] w-full grayscale-[70%] invert-[0.9] hue-rotate-180 transition-[filter] duration-500 hover:grayscale-0 hover:invert-0 hover:hue-rotate-0"
+                    />
+                  )}
                 </div>
               </div>
             </div>
+          </Reveal>
 
-            {/* Social Media */}
-            <div className="mt-8">
-              <p className="font-semibold text-gray-900 mb-4">{t.contact.followUs}</p>
-              <div className="flex space-x-4">
-                <a href="#" className="bg-gray-200 p-3 rounded-full hover:bg-amber-400 transition-colors duration-200">
-                  <Instagram className="h-5 w-5 text-gray-700" />
-                </a>
-                <a href="#" className="bg-gray-200 p-3 rounded-full hover:bg-amber-400 transition-colors duration-200">
-                  <Facebook className="h-5 w-5 text-gray-700" />
-                </a>
-                <a href="#" className="bg-gray-200 p-3 rounded-full hover:bg-amber-400 transition-colors duration-200">
-                  <Twitter className="h-5 w-5 text-gray-700" />
-                </a>
-              </div>
-            </div>
-          </div>
+          {/* Form */}
+          <Reveal delay={120} className="lg:col-span-7">
+            <div className="h-full rounded-[28px] border border-ivory-300 bg-white p-8 shadow-soft md:p-10">
+              <h3 className="font-display text-3xl font-medium text-ink">{t.contact.sendMessage}</h3>
 
-          {/* Contact Form */}
-          <div className="bg-white p-8 rounded-xl shadow-lg">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.contact.sendMessage}</h3>
+              <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div>
+                    <label htmlFor="name" className="field-label">
+                      {t.contact.fullName}
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      autoComplete="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="field"
+                      placeholder={t.contact.fullNamePlaceholder}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="field-label">
+                      {t.contact.emailAddress}
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      autoComplete="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="field"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    {t.contact.fullName}
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                    placeholder={t.contact.fullNamePlaceholder}
-                  />
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div>
+                    <label htmlFor="phone" className="field-label">
+                      {t.contact.phoneNumber}
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      autoComplete="tel"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="field"
+                      placeholder="+91 98765 43210"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="date" className="field-label">
+                      {t.contact.preferredDate}
+                    </label>
+                    <input
+                      type="date"
+                      id="date"
+                      name="date"
+                      min={todayISO()}
+                      value={formData.date}
+                      onChange={handleInputChange}
+                      className="field"
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    {t.contact.emailAddress}
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                    placeholder="your@email.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                    {t.contact.phoneNumber}
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                    placeholder="+919842697382"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="service" className="field-label">
                     {t.contact.serviceType}
                   </label>
                   <select
@@ -215,7 +336,7 @@ export default function Contact() {
                     required
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
+                    className={`field cursor-pointer ${highlightService ? 'border-gold-500 ring-4 ring-gold-500/25' : ''}`}
                   >
                     <option value="">{t.contact.selectService}</option>
                     <optgroup label={t.contact.photographyGroup}>
@@ -237,59 +358,62 @@ export default function Contact() {
                     <option value="combo">{t.contact.photoVideoCombo}</option>
                   </select>
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t.contact.preferredDate}
-                </label>
-                <input
-                  type="date"
-                  id="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                />
-              </div>
+                <div>
+                  <label htmlFor="message" className="field-label">
+                    {t.contact.messageLabel}
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="field resize-y"
+                    placeholder={t.contact.messagePlaceholder}
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t.contact.messageLabel}
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                  placeholder={t.contact.messagePlaceholder}
-                ></textarea>
-              </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-gold w-full py-4 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-4 w-4" />}
+                  <span>{isSubmitting ? t.contact.sendingBtn : t.contact.sendBtn}</span>
+                </button>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-amber-400 text-black py-4 px-6 rounded-lg font-semibold hover:bg-amber-300 transition-all duration-200 flex items-center justify-center space-x-2 transform hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                <Send className="h-5 w-5" />
-                <span>{isSubmitting ? t.contact.sendingBtn : t.contact.sendBtn}</span>
-              </button>
-
-              {submitStatus === 'success' && (
-                <p className="text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-sm">
-                  {t.contact.successMsg}
-                </p>
-              )}
-              {submitStatus === 'error' && (
-                <p className="text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm">
-                  {t.contact.errorMsg}
-                </p>
-              )}
-            </form>
-          </div>
+                <div aria-live="polite">
+                  {submitStatus === 'success' && (
+                    <div className="flex animate-fade-up gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm text-emerald-800">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+                      <div>
+                        <p>{t.contact.successMsg}</p>
+                        {whatsappUrl && (
+                          <a
+                            href={whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-1.5 inline-flex items-center gap-1.5 font-semibold underline underline-offset-2"
+                          >
+                            <WhatsAppIcon className="h-3.5 w-3.5" />
+                            {t.contact.whatsappFallback}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {submitStatus === 'error' && (
+                    <div className="flex animate-fade-up gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm text-red-800">
+                      <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
+                      <p>{t.contact.errorMsg}</p>
+                    </div>
+                  )}
+                </div>
+              </form>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
